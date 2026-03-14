@@ -1,11 +1,29 @@
-const taskInput = document.getElementById('taskInput');
-const addButton = document.getElementById('addButton');
-const taskList = document.getElementById('taskList'); 
+const taskInput = document.getElementById("taskInput");
+const addBtn = document.getElementById("addBtn");
+const taskList = document.getElementById("taskList"); 
 
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let tasks = [];
+
+// Safe localStorage loading
+try {
+    tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+} catch (error) {
+    tasks = [];
+}
+
+// Convert old V1 tasks (strings) to V2 tasks (objects)
+tasks = tasks.map(task => {
+    if (typeof task === "string") {
+        return { text: task, completed: false };
+    }
+    return {
+        text: task.text || '',
+        completed: Boolean(task.completed)
+    }
+});
 
 function saveTasks() {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem("tasks", JSON.stringify(tasks));
     renderTasks();
 }
 
@@ -14,58 +32,68 @@ function renderTasks() {
 
     tasks.forEach((task, index) => {
         const li = document.createElement('li');
+
         if (task.completed) {
-            li.classList.add('completed');
+            li.classList.add("completed");
         }
 
-        const taskText = document.createElement('span');
-        taskText.className = 'task-text';
+        const taskText = document.createElement("span");
+        taskText.className = "task-text";
         taskText.textContent = task.text;
 
-        const actions = document.createElement('div');
-        actions.className = 'task-actions';
+        const actions = document.createElement("div");
+        actions.className = "task-actions";
 
-        const toggleButton = document.createElement('button');
-        toggleButton.textContent = task.completed ? 'Undo' : 'Done';
-        toggleButton.addEventListener('click', () => {
+        const toggleBtn = document.createElement("button");
+        toggleBtn.textContent = task.completed ? "Undo" : "Done";
+        toggleBtn.type = "button";
+
+        toggleBtn.addEventListener("click", () => {
             tasks[index].completed = !tasks[index].completed;
             saveTasks();
         });
 
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.className = 'delete-button';
-        deleteButton.addEventListener('click', () => {
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.className = "delete-button";
+        deleteBtn.type = "button";
+
+        deleteBtn.addEventListener("click", () => {
             tasks.splice(index, 1);
             saveTasks();
         });
 
-        actions.appendChild(toggleButton);
-        actions.appendChild(deleteButton);
+        actions.appendChild(toggleBtn);
+        actions.appendChild(deleteBtn);
+
         li.appendChild(taskText);
         li.appendChild(actions);
+
         taskList.appendChild(li);
     });
 }
 
 function addTask() {
-    const Text = taskInput.value.trim();
-    if (Text === '') return;
+    const text = taskInput.value.trim();
 
-    tasks.push({ 
-        text, 
-        completed: false 
-    });
+    if (text === "") return;
 
-    taskInput.value = '';
+    tasks.push({ text, completed: false });
+    taskInput.value = "";
+    taskInput.focus();
     saveTasks();
 }
 
-addButton.addEventListener('click', addTask);
-taskInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
+addBtn.addEventListener("click", addTask);
+
+taskInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
         addTask();
     }
 });
 
-renderTasks();
+//Save immediately so old tasks format is migrated in localStorage
+saveTasks();
+
+
+
