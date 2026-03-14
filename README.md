@@ -22,6 +22,10 @@ Interactive Todo application built with HTML, CSS and JavaScript.
 
 This project was created to practice DOM manipulation, event handling, and working with browser storage.
 
+## Live Demo
+
+[Open Project](https://stellular-shortbread-c29e2f.netlify.app/)
+
 ## Screenshot
 
 ![Todo App Screenshot](images/screenshot.png)
