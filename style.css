@@ -122,3 +122,69 @@ li {
     color: var(--danger-text);
     border: 1px solid var(--danger-border);
 }
+
+/* Скрытие элемента визуально, но оставление для скринридеров */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Стили для панели управления V2.5 */
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.filters {
+    display: flex;
+    gap: 4px;
+}
+
+.filter-btn {
+    background: transparent;
+    color: var(--text-muted);
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.filter-btn:hover {
+    color: var(--text-main);
+}
+
+.filter-btn.active {
+    background: var(--bg-main);
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.clear-btn {
+    background: transparent;
+    color: var(--text-muted);
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.clear-btn:hover {
+    color: var(--danger-text);
+    background: var(--danger-bg);
+}
+
+/* Стиль для визуальной заглушки (Empty State) */
+.empty-state {
+    display: block;
+    text-align: center;
+    color: var(--text-muted);
+    padding: 20px 0;
+    font-style: italic;
+    background: transparent;
+}
