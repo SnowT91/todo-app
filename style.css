@@ -1,29 +1,46 @@
+:root {
+    --bg-main: #f3f4f6;
+    --bg-container: #ffffff;
+    --bg-task: #f9fafb;
+    --text-main: #1f2937;
+    --text-muted: #9ca3af;
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+    --danger-bg: #fee2e2;
+    --danger-border: #f87171;
+    --danger-text: #b91c1c;
+    --danger-hover: #fecaca;
+}
+
 *{
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding-top: 50px;
+    padding: 50px 20px;
 }
 
 .container {
-    background: white;
+    background: var(--bg-container);
     padding: 24px;
-    border-radius: 12px;
-    width: 360px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
 h1 {
     margin-top: 0;
     text-align: center;
+    font-weight: 600;
 }
 
 .input-group {
@@ -33,19 +50,44 @@ h1 {
 
 input {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    border-color: var(--accent-color);
 }
 
 button {
-    padding: 10px 14px;
+    padding: 10px 16px;
     cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+#addBtn, .task-actions button:first-child {
+    background: var(--accent-color);
+    color: white;
+}
+
+#addBtn:hover, .task-actions button:first-child:hover {
+    background: var(--accent-hover);
 }
 
 ul {
     list-style: none;
     padding: 0;
-    margin-top: 20px;
+    margin-top: 24px;
 }
 
 li {
@@ -53,19 +95,21 @@ li {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    background: #fafafa;
-    padding: 10px;
-    border-radius: 8px;
+    background: var(--bg-task);
+    padding: 12px 16px;
+    border-radius: 12px;
     margin-bottom: 10px;
+    transition: opacity 0.3s;
 }
 
 .task-text {
     flex: 1;
+    word-break: break-word; /* Чтобы длинные слова не ломали верстку */
 }   
 
 .completed .task-text {
     text-decoration: line-through;
-    opacity: 0.6;
+    color: var(--text-muted);
 }
 
 .task-actions {
@@ -74,6 +118,7 @@ li {
 }
 
 .delete-btn {
-    background: #ffdddd;
-    border: 1px solid #ffb3b3;
+    background: var(--danger-bg);
+    color: var(--danger-text);
+    border: 1px solid var(--danger-border);
 }

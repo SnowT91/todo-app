@@ -24,7 +24,6 @@ tasks = tasks.map(task => {
 
 function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
-    renderTasks();
 }
 
 function renderTasks() {
@@ -51,16 +50,18 @@ function renderTasks() {
         toggleBtn.addEventListener("click", () => {
             tasks[index].completed = !tasks[index].completed;
             saveTasks();
+            renderTasks();
         });
 
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete";
-        deleteBtn.className = "delete-button";
+        deleteBtn.className = "delete-btn";
         deleteBtn.type = "button";
 
         deleteBtn.addEventListener("click", () => {
             tasks.splice(index, 1);
             saveTasks();
+            renderTasks();
         });
 
         actions.appendChild(toggleBtn);
@@ -82,6 +83,7 @@ function addTask() {
     taskInput.value = "";
     taskInput.focus();
     saveTasks();
+    renderTasks();
 }
 
 addBtn.addEventListener("click", addTask);
@@ -92,8 +94,7 @@ taskInput.addEventListener("keydown", (event) => {
     }
 });
 
-//Save immediately so old tasks format is migrated in localStorage
+// 1. Сохраняем мигрированные данные один раз при загрузке
 saveTasks();
-
-
-
+// 2. Отрисовываем интерфейс
+renderTasks();
